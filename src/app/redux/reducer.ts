@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadVideos, loadVideosSuccessfully, loadVideosFail } from './actions';
-import VideoState from '../models/video-state.model';
+import { VideoState } from '../models/';
 
 export const initialState: VideoState = {
   status: 'init',
@@ -16,15 +16,15 @@ const _videoReducer = createReducer(
     status: 'loading',
     error: '',
   })),
-  on(loadVideosSuccessfully, (state) => ({
+  on(loadVideosSuccessfully, (state, { payload }) => ({
     status: 'success',
-    videos: ['video1', 'video2'],
+    videos: payload,
     error: '',
   })),
-  on(loadVideosFail, (state) => ({
+  on(loadVideosFail, (state, { payload }) => ({
     ...state,
     status: 'error',
-    error: 'Some error!!!',
+    error: payload,
   }))
 );
 

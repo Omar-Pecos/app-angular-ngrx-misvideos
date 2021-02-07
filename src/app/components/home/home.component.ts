@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  loadVideos,
-  loadVideosFail,
-  loadVideosSuccessfully,
-} from 'src/app/redux/actions';
-import { getVideos, getStatus, getError } from 'src/app/redux/selectors';
-import VideoState from '../../models/video-state.model';
+import { VideoState, Video } from 'src/app/models';
+import { loadVideos } from 'src/app/redux/actions';
+//import { getVideos, getStatus, getError } from 'src/app/redux/selectors';
 
 @Component({
   selector: 'app-home',
@@ -15,25 +11,20 @@ import VideoState from '../../models/video-state.model';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  videos$: Observable<string[]>;
+  videos$: Observable<Video[]>;
   status$: Observable<string>;
   error$: Observable<string>;
 
   constructor(private _store: Store<{ videoState: VideoState }>) {
-    this.status$ = this._store.pipe(select(getStatus));
-    this.videos$ = this._store.pipe(select(getVideos));
-    this.error$ = this._store.pipe(select(getError));
+    //with selectors
+    // this.videos$ = this._store.pipe(select(getVideos));
 
+    this.status$ = this._store.select((state) => state.videoState.status);
+    this.videos$ = this._store.select((state) => state.videoState.videos);
+    this.error$ = this._store.select((state) => state.videoState.error);
+  }
+
+  ngOnInit(): void {
     this._store.dispatch(loadVideos());
   }
-
-  success() {
-    this._store.dispatch(loadVideosSuccessfully());
-  }
-
-  fail() {
-    this._store.dispatch(loadVideosFail());
-  }
-
-  ngOnInit(): void {}
 }

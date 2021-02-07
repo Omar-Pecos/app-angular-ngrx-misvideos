@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 
@@ -11,11 +12,13 @@ import { environment } from 'src/environments/environment';
 
 import { EffectsModule } from '@ngrx/effects';
 import { videoReducer } from './redux/reducer';
+import { VideoEffects } from './redux/videos.effects';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot({ videoState: videoReducer }, {}),
 
@@ -24,7 +27,7 @@ import { videoReducer } from './redux/reducer';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([VideoEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
