@@ -1,0 +1,18 @@
+<div *ngIf="status$ | async as status">
+  <p *ngIf="status == 'init'" class="alert alert-success">Init !</p>
+  <p *ngIf="status == 'loading'" class="alert alert-success">Loading!!!</p>
+  <p *ngIf="status == 'success'" class="alert alert-success">Success</p>
+</div>
+
+<div class="container" *ngIf="videos$ | async as videos">
+  <span *ngFor="let video of videos"> -->>> {{ video }} </span>
+</div>
+
+<div *ngIf="error$ | async as error">
+  <p *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </p>
+</div>
+
+<button (click)="success()">Add datos</button>
+<button (click)="fail()">Fail</button>
