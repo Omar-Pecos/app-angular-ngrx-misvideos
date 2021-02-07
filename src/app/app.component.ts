@@ -7,12 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app-ngrx-misvideos';
-
-  body = {
-    name: 'pepe',
-  };
-
-  constructor() {
-    const { name } = this.body;
-  }
 }
