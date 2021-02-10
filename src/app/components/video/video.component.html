@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-3 col-md-2 mt-2 mt-lg-4 mt-xl-5">
+    <img class="img-fluid" src="assets/images/play.png" alt="play" />
+  </div>
+  <div class="col mt-2 mt-lg-4 mt-xl-5">
+    <h4>{{ video.name }}</h4>
+
+    <p *ngIf="video.desc">{{ video.desc }}</p>
+    <p *ngIf="!video.desc">Sin descripción</p>
+
+    <div class="d-flex flex-row justify-content-end operations-bar">
+      <img class="img-fluid" src="assets/images/edit.png" alt="Edit" />
+      <img class="img-fluid" src="assets/images/delete.png" alt="Delete" />
+    </div>
+  </div>
+</div>

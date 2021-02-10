@@ -11,6 +11,9 @@ import { loadVideos } from 'src/app/redux/actions';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  public status!: string;
+  public error: string = '';
+
   videos$: Observable<Video[]>;
   status$: Observable<string>;
   error$: Observable<string>;
@@ -22,9 +25,18 @@ export class HomeComponent implements OnInit {
     this.status$ = this._store.select((state) => state.videoState.status);
     this.videos$ = this._store.select((state) => state.videoState.videos);
     this.error$ = this._store.select((state) => state.videoState.error);
+
+    this.status$.subscribe((status) => {
+      this.status = status;
+    });
   }
 
   ngOnInit(): void {
     this._store.dispatch(loadVideos());
+  }
+
+  ngDoCheck(): void {
+    this.status$.subscribe((status) => (this.status = status));
+    this.error$.subscribe((err) => (this.error = err));
   }
 }

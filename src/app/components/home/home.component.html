@@ -1,18 +1,125 @@
-<div *ngIf="status$ | async as status">
-  <p *ngIf="status == 'init'" class="alert alert-success">Init !</p>
-  <p *ngIf="status == 'loading'" class="alert alert-success">Loading!!!</p>
-  <p *ngIf="status == 'success'" class="alert alert-success">Success</p>
-</div>
-
-<div class="container" *ngIf="videos$ | async as videos">
-  <div *ngFor="let video of videos">
-    >> {{ video.id }} - {{ video.name }} at
-    {{ video.createdAt | date: 'medium' }}
+<!-- logo -->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-3 col-md-2 col-xl-1">
+      <img
+        class="img-fluid"
+        src="https://res.cloudinary.com/omarpvcloud/image/upload/v1606153378/logos/omarpv_logo_acrxqu.png"
+        alt="omarpvLogo"
+      />
+    </div>
   </div>
-</div>
 
-<div *ngIf="error$ | async as error">
-  <p *ngIf="error" class="alert alert-danger">
-    {{ error }}
-  </p>
+  <!-- nav -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Mis Videos</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- content -->
+
+  <div>
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+  </div>
+
+  <div class="row justify-content-center p-5">
+    <div
+      *ngIf="videos$ | async as videos"
+      class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
+    >
+      <VideoComponent *ngFor="let video of videos" [video]="video">
+      </VideoComponent>
+    </div>
+
+    <div
+      *ngIf="status == 'loading'"
+      class="h3 col-md-8 order-2 order-md-1 overflow-auto content-principal d-flex align-items-center justify-content-center"
+    >
+      <div>Loading ...</div>
+    </div>
+
+    <div class="col-6 col-md-4 order-1 order-md-2 p-3">
+      <h3 class="text-center">Añadir nuevo</h3>
+      <form class="form">
+        <div class="form-group">
+          <label for="name" class="form-control-label">Nombre *</label>
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            id="name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="command" class="form-control-label">Nombre corto *</label>
+          <input
+            class="form-control"
+            type="text"
+            name="command"
+            id="command"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="description" class="form-control-label"
+            >Descripción</label
+          >
+          <input
+            class="form-control"
+            type="text"
+            name="description"
+            id="description"
+          />
+        </div>
+        <div class="form-group">
+          <label for="url" class="form-control-label">Url *</label>
+          <input class="form-control" type="text" url="url" id="url" required />
+        </div>
+
+        <p class="text-center p-3">
+          <input type="submit" class="btn btn-success" value="Añadir" />
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div id="footer" class="row text-center bg-dark text-white">
+    <p class="h5 p-3">Omar Pecos - Desarrollador Full Stack</p>
+
+    <div class="col-3 col-md-2 col-xl-1">
+      <img
+        class="img-fluid"
+        src="https://res.cloudinary.com/omarpvcloud/image/upload/v1606153378/logos/omarpv_logo_acrxqu.png"
+        alt="omarpvLogo"
+      />
+    </div>
+
+    <p class="h6 p-3">2021</p>
+  </div>
 </div>

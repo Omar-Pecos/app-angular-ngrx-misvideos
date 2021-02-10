@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/* home */
+
+.content-principal {
+  max-height: 450px;
+  background-color: #ead3ea;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.content-principal::-webkit-scrollbar {
+  display: none;
+}
+
+.operations-bar {
+  height: 5vw;
+}
+
+.operations-bar > img {
+  margin: 10px;
+}
+
+#footer {
+  flex-direction: column;
+  align-items: center;
+}
+
+/*  play */
+
+.video-small-list {
+  padding: 10px 0;
+  max-height: 450px;
+  height: 330px;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.video-small-list::-webkit-scrollbar {
+  display: none;
+}
+
+.video-small-list > li {
+  justify-content: space-evenly;
+}
+
+@media (max-width: 768px) {
+  .operations-bar {
+    height: 10vw;
+  }
+}

@@ -13,9 +13,10 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { videoReducer } from './redux/reducer';
 import { VideoEffects } from './redux/videos.effects';
+import { VideoComponent } from './components/video/video.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, VideoComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
