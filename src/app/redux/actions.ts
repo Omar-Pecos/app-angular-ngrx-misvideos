@@ -11,4 +11,24 @@ const loadVideosFail = createAction(
   props<{ payload: string }>()
 );
 
-export { loadVideos, loadVideosSuccessfully, loadVideosFail };
+const createVideo = createAction(
+  '[ VIDEOS ] Create Video',
+  props<{ payload: Video }>()
+);
+const createVideoSuccessfully = createAction(
+  '[ VIDEOS ] Create Video successfully',
+  props<{ payload: Video }>()
+);
+const createVideoFail = createAction(
+  '[ VIDEOS ] Create Video fail',
+  props<{ payload: string }>()
+);
+
+export {
+  loadVideos,
+  loadVideosSuccessfully,
+  loadVideosFail,
+  createVideo,
+  createVideoSuccessfully,
+  createVideoFail,
+};

@@ -48,10 +48,10 @@
 
   <div class="row justify-content-center p-5">
     <div
-      *ngIf="videos$ | async as videos"
+      *ngIf="status == 'success'"
       class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
     >
-      <VideoComponent *ngFor="let video of videos" [video]="video">
+      <VideoComponent *ngFor="let video of videos$ | async" [video]="video">
       </VideoComponent>
     </div>
 
@@ -64,7 +64,7 @@
 
     <div class="col-6 col-md-4 order-1 order-md-2 p-3">
       <h3 class="text-center">Añadir nuevo</h3>
-      <form class="form">
+      <form class="form" #videoForm="ngForm" (submit)="onSubmit($event)">
         <div class="form-group">
           <label for="name" class="form-control-label">Nombre *</label>
           <input
@@ -72,8 +72,17 @@
             type="text"
             name="name"
             id="name"
+            [(ngModel)]="formVideo.name"
+            #name="ngModel"
             required
           />
+
+          <div
+            *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert alert-danger"
+          >
+            <p *ngIf="name.errors?.required">El nombre es obligatorio</p>
+          </div>
         </div>
         <div class="form-group">
           <label for="command" class="form-control-label">Nombre corto *</label>
@@ -82,27 +91,57 @@
             type="text"
             name="command"
             id="command"
+            [(ngModel)]="formVideo.command"
+            #command="ngModel"
             required
           />
+
+          <div
+            *ngIf="command.invalid && (command.dirty || command.touched)"
+            class="alert alert-danger"
+          >
+            <p *ngIf="command.errors?.required">
+              El nombre corto es obligatorio
+            </p>
+          </div>
         </div>
         <div class="form-group">
-          <label for="description" class="form-control-label"
-            >Descripción</label
-          >
+          <label for="desc" class="form-control-label">Descripción</label>
           <input
             class="form-control"
             type="text"
-            name="description"
-            id="description"
+            name="desc"
+            id="desc"
+            [(ngModel)]="formVideo.desc"
           />
         </div>
         <div class="form-group">
           <label for="url" class="form-control-label">Url *</label>
-          <input class="form-control" type="text" url="url" id="url" required />
+          <input
+            class="form-control"
+            type="text"
+            name="url"
+            id="url"
+            [(ngModel)]="formVideo.url"
+            #url="ngModel"
+            required
+          />
+
+          <div
+            *ngIf="url.invalid && (url.dirty || url.touched)"
+            class="alert alert-danger"
+          >
+            <p *ngIf="url.errors?.required">La url del video es obligatoria</p>
+          </div>
         </div>
 
         <p class="text-center p-3">
-          <input type="submit" class="btn btn-success" value="Añadir" />
+          <input
+            type="submit"
+            class="btn btn-success"
+            value="Añadir"
+            [disabled]="videoForm.invalid"
+          />
         </p>
       </form>
     </div>
