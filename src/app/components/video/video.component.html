@@ -9,7 +9,12 @@
     <p *ngIf="!video.desc">Sin descripción</p>
 
     <div class="d-flex flex-row justify-content-end operations-bar">
-      <img class="img-fluid" src="assets/images/edit.png" alt="Edit" />
+      <img
+        class="img-fluid"
+        src="assets/images/edit.png"
+        alt="Edit"
+        (click)="edit(video)"
+      />
       <img class="img-fluid" src="assets/images/delete.png" alt="Delete" />
     </div>
   </div>

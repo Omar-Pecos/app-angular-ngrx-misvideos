@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { VideoState, Video } from 'src/app/models';
-import { loadVideos, createVideo } from 'src/app/redux/actions';
+import { loadVideos, createVideo, editVideo } from 'src/app/redux/actions';
 //import { getVideos, getStatus, getError } from 'src/app/redux/selectors';
 
 @Component({
@@ -14,6 +15,8 @@ export class HomeComponent implements OnInit {
   public status!: string;
   public error: string = '';
   public formVideo: Video;
+  public isEditing: boolean = false;
+  private videoIdEditing: number = 0;
 
   videos$: Observable<Video[]>;
   status$: Observable<string>;
@@ -51,10 +54,36 @@ export class HomeComponent implements OnInit {
     updatedAt: new Date(),
   });
 
-  onSubmit(event: Event) {
+  resetToAddModeAgain = (form: NgForm) => {
+    this.videoIdEditing = 0;
+    this.formVideo = this.resetFormVideo();
+
+    this.isEditing = false;
+    form.reset();
+  };
+
+  onSubmit(event: Event, form: NgForm) {
     event.preventDefault();
 
-    this._store.dispatch(createVideo({ payload: this.formVideo }));
-    this.formVideo = this.resetFormVideo();
+    if (!this.isEditing) {
+      //creating new
+      this._store.dispatch(createVideo({ payload: this.formVideo }));
+    } else {
+      //editing existing
+      this._store.dispatch(
+        editVideo({ id: this.videoIdEditing, payload: this.formVideo })
+      );
+    }
+
+    this.resetToAddModeAgain(form);
+  }
+
+  receiveVideoFromChild(data: { id: number; video: Video }) {
+    const { id, video } = data;
+
+    this.videoIdEditing = id;
+    this.formVideo = { ...video };
+
+    this.isEditing = true;
   }
 }

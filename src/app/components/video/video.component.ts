@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Video } from 'src/app/models';
 
 @Component({
@@ -8,8 +8,18 @@ import { Video } from 'src/app/models';
 })
 export class VideoComponent implements OnInit {
   @Input() video!: Video;
+  @Output() sendVideotoEdit: EventEmitter<{ id: number; video: Video }>;
 
-  constructor() {}
+  constructor() {
+    this.sendVideotoEdit = new EventEmitter();
+  }
 
   ngOnInit(): void {}
+
+  edit(video: Video) {
+    this.sendVideotoEdit.emit({
+      video,
+      id: video.id,
+    });
+  }
 }

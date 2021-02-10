@@ -51,7 +51,11 @@
       *ngIf="status == 'success'"
       class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
     >
-      <VideoComponent *ngFor="let video of videos$ | async" [video]="video">
+      <VideoComponent
+        *ngFor="let video of videos$ | async"
+        [video]="video"
+        (sendVideotoEdit)="receiveVideoFromChild($event)"
+      >
       </VideoComponent>
     </div>
 
@@ -62,9 +66,25 @@
       <div>Loading ...</div>
     </div>
 
-    <div class="col-6 col-md-4 order-1 order-md-2 p-3">
-      <h3 class="text-center">Añadir nuevo</h3>
-      <form class="form" #videoForm="ngForm" (submit)="onSubmit($event)">
+    <div class="col-10 col-md-4 order-1 order-md-2 p-3">
+      <p *ngIf="isEditing" style="text-align: center">
+        <input
+          type="button"
+          class="btn btn-success"
+          value="Volver a Añadir"
+          (click)="resetToAddModeAgain(videoForm)"
+        />
+      </p>
+
+      <h3 class="text-center">
+        {{ isEditing ? 'Editar vídeo' : 'Añadir nuevo' }}
+      </h3>
+
+      <form
+        class="form"
+        #videoForm="ngForm"
+        (submit)="onSubmit($event, videoForm)"
+      >
         <div class="form-group">
           <label for="name" class="form-control-label">Nombre *</label>
           <input
@@ -81,7 +101,7 @@
             *ngIf="name.invalid && (name.dirty || name.touched)"
             class="alert alert-danger"
           >
-            <p *ngIf="name.errors?.required">El nombre es obligatorio</p>
+            <span *ngIf="name.errors?.required">El nombre es obligatorio</span>
           </div>
         </div>
         <div class="form-group">
@@ -100,9 +120,9 @@
             *ngIf="command.invalid && (command.dirty || command.touched)"
             class="alert alert-danger"
           >
-            <p *ngIf="command.errors?.required">
+            <span *ngIf="command.errors?.required">
               El nombre corto es obligatorio
-            </p>
+            </span>
           </div>
         </div>
         <div class="form-group">
@@ -131,7 +151,9 @@
             *ngIf="url.invalid && (url.dirty || url.touched)"
             class="alert alert-danger"
           >
-            <p *ngIf="url.errors?.required">La url del video es obligatoria</p>
+            <span *ngIf="url.errors?.required"
+              >La url del video es obligatoria</span
+            >
           </div>
         </div>
 
@@ -139,7 +161,7 @@
           <input
             type="submit"
             class="btn btn-success"
-            value="Añadir"
+            [value]="isEditing ? 'Editar' : 'Añadir'"
             [disabled]="videoForm.invalid"
           />
         </p>

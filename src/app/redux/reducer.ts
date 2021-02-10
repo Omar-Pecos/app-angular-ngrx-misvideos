@@ -6,6 +6,9 @@ import {
   createVideo,
   createVideoSuccessfully,
   createVideoFail,
+  editVideo,
+  editVideoSuccessfully,
+  editVideoFail,
 } from './actions';
 import { VideoState } from '../models/';
 
@@ -46,6 +49,27 @@ const _videoReducer = createReducer(
     error: '',
   })),
   on(createVideoFail, (state, { payload }) => ({
+    ...state,
+    status: 'error',
+    error: payload,
+  })),
+
+  on(editVideo, (state) => ({
+    ...state,
+    status: 'loading',
+    error: '',
+  })),
+  on(editVideoSuccessfully, (state, { payload }) => ({
+    ...state,
+    status: 'success',
+    videos: state.videos.map((video) => {
+      if (video.id == payload.id) video = payload;
+
+      return video;
+    }),
+    error: '',
+  })),
+  on(editVideoFail, (state, { payload }) => ({
     ...state,
     status: 'error',
     error: payload,

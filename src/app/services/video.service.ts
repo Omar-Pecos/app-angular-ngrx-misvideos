@@ -19,4 +19,11 @@ export class VideoService {
   createVideo(body: Video): Observable<ApiResponse> {
     return this._http.post<ApiResponse>(this.API_URL + '/api/v1/apm', body);
   }
+
+  editVideo(id: number, body: Video): Observable<ApiResponse> {
+    return this._http.put<ApiResponse>(
+      this.API_URL + '/api/v1/apm/' + id,
+      body
+    );
+  }
 }
