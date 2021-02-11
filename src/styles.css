@@ -2,7 +2,7 @@
 
 .content-principal {
   max-height: 450px;
-  background-color: #ead3ea;
+  background-color: #ead3ea3a;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }

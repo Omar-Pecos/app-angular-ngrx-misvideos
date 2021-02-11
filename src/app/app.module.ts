@@ -16,9 +16,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { videoReducer } from './redux/reducer';
 import { VideoEffects } from './redux/videos.effects';
 import { VideoComponent } from './components/video/video.component';
+import { PlayComponent } from './components/play/play.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, VideoComponent],
+  declarations: [AppComponent, HomeComponent, VideoComponent, PlayComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     FormsModule,

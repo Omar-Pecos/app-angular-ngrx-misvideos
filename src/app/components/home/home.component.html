@@ -1,203 +1,152 @@
-<!-- logo -->
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-3 col-md-2 col-xl-1">
-      <img
-        class="img-fluid"
-        src="https://res.cloudinary.com/omarpvcloud/image/upload/v1606153378/logos/omarpv_logo_acrxqu.png"
-        alt="omarpvLogo"
-      />
-    </div>
-  </div>
+<!-- header -->
+<app-header></app-header>
+<!-- content -->
 
-  <!-- nav -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Mis Videos</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- content -->
-
-  <div>
-    <div
-      *ngIf="error"
-      class="alert alert-danger alert-dismissible fade show"
-      role="alert"
+<div>
+  <div
+    *ngIf="error"
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+  >
+    {{ error }}
+    <button
+      type="button"
+      class="close"
+      (click)="error = ''"
+      data-dismiss="alert"
+      aria-label="Close"
     >
-      {{ error }}
-      <button
-        type="button"
-        class="close"
-        (click)="error = ''"
-        data-dismiss="alert"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="row justify-content-center p-5">
-    <div
-      *ngIf="status != 'loading'"
-      class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
-    >
-      <VideoComponent
-        *ngFor="let video of videos$ | async"
-        [video]="video"
-        (sendVideotoEdit)="receiveVideoToEditFromChild($event)"
-        (sendVideotoDelete)="receiveVideoToDeleteFromChild($event)"
-      >
-      </VideoComponent>
-    </div>
-
-    <div
-      *ngIf="status == 'loading'"
-      class="h3 col-md-8 order-2 order-md-1 overflow-auto content-principal d-flex align-items-center justify-content-center"
-    >
-      <div>Loading ...</div>
-    </div>
-
-    <div class="col-10 col-md-4 order-1 order-md-2 p-3">
-      <p *ngIf="isEditing" style="text-align: center">
-        <input
-          type="button"
-          class="btn btn-success"
-          value="Volver a Añadir"
-          (click)="resetToAddModeAgain(videoForm)"
-        />
-      </p>
-
-      <h3 class="text-center">
-        {{ isEditing ? 'Editar vídeo' : 'Añadir nuevo' }}
-      </h3>
-
-      <form
-        class="form"
-        #videoForm="ngForm"
-        (submit)="onSubmit($event, videoForm)"
-      >
-        <div class="form-group">
-          <label for="name" class="form-control-label">Nombre *</label>
-          <input
-            class="form-control"
-            type="text"
-            name="name"
-            id="name"
-            [(ngModel)]="formVideo.name"
-            #name="ngModel"
-            required
-          />
-
-          <div
-            *ngIf="name.invalid && (name.dirty || name.touched)"
-            class="alert alert-danger"
-          >
-            <span *ngIf="name.errors?.required">El nombre es obligatorio</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="command" class="form-control-label">Nombre corto *</label>
-          <input
-            class="form-control"
-            type="text"
-            name="command"
-            id="command"
-            [(ngModel)]="formVideo.command"
-            #command="ngModel"
-            required
-          />
-
-          <div
-            *ngIf="command.invalid && (command.dirty || command.touched)"
-            class="alert alert-danger"
-          >
-            <span *ngIf="command.errors?.required">
-              El nombre corto es obligatorio
-            </span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="desc" class="form-control-label">Descripción</label>
-          <input
-            class="form-control"
-            type="text"
-            name="desc"
-            id="desc"
-            [(ngModel)]="formVideo.desc"
-          />
-        </div>
-        <div class="form-group">
-          <label for="url" class="form-control-label">Url *</label>
-          <input
-            class="form-control"
-            type="text"
-            name="url"
-            id="url"
-            [(ngModel)]="formVideo.url"
-            #url="ngModel"
-            required
-          />
-
-          <div
-            *ngIf="url.invalid && (url.dirty || url.touched)"
-            class="alert alert-danger"
-          >
-            <span *ngIf="url.errors?.required"
-              >La url del video es obligatoria</span
-            >
-          </div>
-        </div>
-
-        <p class="text-center p-3">
-          <input
-            type="submit"
-            class="btn btn-success"
-            [value]="isEditing ? 'Editar' : 'Añadir'"
-            [disabled]="videoForm.invalid"
-          />
-        </p>
-      </form>
-    </div>
-  </div>
-
-  <!-- footer -->
-  <div id="footer" class="row text-center bg-dark text-white">
-    <p class="h5 p-3">Omar Pecos - Desarrollador Full Stack</p>
-
-    <div class="col-3 col-md-2 col-xl-1">
-      <img
-        class="img-fluid"
-        src="https://res.cloudinary.com/omarpvcloud/image/upload/v1606153378/logos/omarpv_logo_acrxqu.png"
-        alt="omarpvLogo"
-      />
-    </div>
-
-    <p class="h6 p-3">2021</p>
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
+
+<div class="row justify-content-center p-5">
+  <div
+    *ngIf="status != 'loading'"
+    class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
+  >
+    <VideoComponent
+      *ngFor="let video of videos$ | async"
+      [video]="video"
+      (sendVideotoEdit)="receiveVideoToEditFromChild($event)"
+      (sendVideotoDelete)="receiveVideoToDeleteFromChild($event)"
+    >
+    </VideoComponent>
+  </div>
+
+  <div
+    *ngIf="status == 'loading'"
+    class="h3 col-md-8 order-2 order-md-1 overflow-auto content-principal d-flex align-items-center justify-content-center"
+  >
+    <div>Loading ...</div>
+  </div>
+
+  <div class="col-10 col-md-4 order-1 order-md-2 p-3">
+    <p *ngIf="isEditing" style="text-align: center">
+      <input
+        type="button"
+        class="btn btn-success"
+        value="Volver a Añadir"
+        (click)="resetToAddModeAgain(videoForm)"
+      />
+    </p>
+
+    <h3 class="text-center">
+      {{ isEditing ? 'Editar vídeo' : 'Añadir nuevo' }}
+    </h3>
+
+    <form
+      class="form"
+      #videoForm="ngForm"
+      (submit)="onSubmit($event, videoForm)"
+    >
+      <div class="form-group">
+        <label for="name" class="form-control-label">Nombre *</label>
+        <input
+          class="form-control"
+          type="text"
+          name="name"
+          id="name"
+          [(ngModel)]="formVideo.name"
+          #name="ngModel"
+          required
+        />
+
+        <div
+          *ngIf="name.invalid && (name.dirty || name.touched)"
+          class="alert alert-danger"
+        >
+          <span *ngIf="name.errors?.required">El nombre es obligatorio</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="command" class="form-control-label">Nombre corto *</label>
+        <input
+          class="form-control"
+          type="text"
+          name="command"
+          id="command"
+          [(ngModel)]="formVideo.command"
+          #command="ngModel"
+          required
+        />
+
+        <div
+          *ngIf="command.invalid && (command.dirty || command.touched)"
+          class="alert alert-danger"
+        >
+          <span *ngIf="command.errors?.required">
+            El nombre corto es obligatorio
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="desc" class="form-control-label">Descripción</label>
+        <input
+          class="form-control"
+          type="text"
+          name="desc"
+          id="desc"
+          [(ngModel)]="formVideo.desc"
+        />
+      </div>
+      <div class="form-group">
+        <label for="url" class="form-control-label">Url *</label>
+        <input
+          class="form-control"
+          type="text"
+          name="url"
+          id="url"
+          [(ngModel)]="formVideo.url"
+          #url="ngModel"
+          required
+        />
+
+        <div
+          *ngIf="url.invalid && (url.dirty || url.touched)"
+          class="alert alert-danger"
+        >
+          <span *ngIf="url.errors?.required"
+            >La url del video es obligatoria</span
+          >
+        </div>
+      </div>
+
+      <p class="text-center p-3">
+        <input
+          type="submit"
+          class="btn btn-success"
+          [value]="isEditing ? 'Editar' : 'Añadir'"
+          [disabled]="videoForm.invalid"
+        />
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- footer -->
+<app-footer></app-footer>
 
 <!--Video delete confirmation modal -->
 <swal
