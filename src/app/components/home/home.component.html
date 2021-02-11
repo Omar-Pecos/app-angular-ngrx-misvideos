@@ -41,20 +41,34 @@
   <!-- content -->
 
   <div>
-    <div *ngIf="error" class="alert alert-danger">
+    <div
+      *ngIf="error"
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert"
+    >
       {{ error }}
+      <button
+        type="button"
+        class="close"
+        (click)="error = ''"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </div>
 
   <div class="row justify-content-center p-5">
     <div
-      *ngIf="status == 'success'"
+      *ngIf="status != 'loading'"
       class="col-md-8 order-2 order-md-1 overflow-auto content-principal"
     >
       <VideoComponent
         *ngFor="let video of videos$ | async"
         [video]="video"
-        (sendVideotoEdit)="receiveVideoFromChild($event)"
+        (sendVideotoEdit)="receiveVideoToEditFromChild($event)"
+        (sendVideotoDelete)="receiveVideoToDeleteFromChild($event)"
       >
       </VideoComponent>
     </div>
@@ -184,3 +198,19 @@
     <p class="h6 p-3">2021</p>
   </div>
 </div>
+
+<!--Video delete confirmation modal -->
+<swal
+  #deleteSwal
+  title="¿Estás seguro?"
+  text="El video '{{ videoToDelete?.name }}' se eliminará"
+  icon="error"
+  [showCancelButton]="true"
+  cancelButtonText="Cancelar"
+  confirmButtonText="Eliminar"
+  confirmButtonColor="red"
+  [focusCancel]="true"
+  (dismiss)="resetVideoToDelete(videoForm)"
+  (confirm)="deleteVideo(videoForm)"
+>
+</swal>

@@ -37,6 +37,19 @@ const editVideoFail = createAction(
   props<{ payload: string }>()
 );
 
+const deleteVideo = createAction(
+  '[ VIDEOS ] Delete Video',
+  props<{ id: number }>()
+);
+const deleteVideoSuccessfully = createAction(
+  '[ VIDEOS ] Delete Video successfully',
+  props<{ payload: Video }>()
+);
+const deleteVideoFail = createAction(
+  '[ VIDEOS ] Delete Video fail',
+  props<{ payload: string }>()
+);
+
 export {
   loadVideos,
   loadVideosSuccessfully,
@@ -47,4 +60,7 @@ export {
   editVideo,
   editVideoSuccessfully,
   editVideoFail,
+  deleteVideo,
+  deleteVideoSuccessfully,
+  deleteVideoFail,
 };

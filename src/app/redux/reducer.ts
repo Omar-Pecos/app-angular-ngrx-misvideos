@@ -9,6 +9,9 @@ import {
   editVideo,
   editVideoSuccessfully,
   editVideoFail,
+  deleteVideo,
+  deleteVideoSuccessfully,
+  deleteVideoFail,
 } from './actions';
 import { VideoState } from '../models/';
 
@@ -70,6 +73,23 @@ const _videoReducer = createReducer(
     error: '',
   })),
   on(editVideoFail, (state, { payload }) => ({
+    ...state,
+    status: 'error',
+    error: payload,
+  })),
+
+  on(deleteVideo, (state) => ({
+    ...state,
+    status: 'loading',
+    error: '',
+  })),
+  on(deleteVideoSuccessfully, (state, { payload }) => ({
+    ...state,
+    status: 'success',
+    videos: state.videos.filter((video) => video.id != payload.id),
+    error: '',
+  })),
+  on(deleteVideoFail, (state, { payload }) => ({
     ...state,
     status: 'error',
     error: payload,

@@ -9,15 +9,24 @@ import { Video } from 'src/app/models';
 export class VideoComponent implements OnInit {
   @Input() video!: Video;
   @Output() sendVideotoEdit: EventEmitter<{ id: number; video: Video }>;
+  @Output() sendVideotoDelete: EventEmitter<{ id: number; video: Video }>;
 
   constructor() {
     this.sendVideotoEdit = new EventEmitter();
+    this.sendVideotoDelete = new EventEmitter();
   }
 
   ngOnInit(): void {}
 
   edit(video: Video) {
     this.sendVideotoEdit.emit({
+      video,
+      id: video.id,
+    });
+  }
+
+  delete(video: Video) {
+    this.sendVideotoDelete.emit({
       video,
       id: video.id,
     });

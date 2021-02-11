@@ -26,4 +26,8 @@ export class VideoService {
       body
     );
   }
+
+  deleteVideo(id: number): Observable<ApiResponse> {
+    return this._http.delete<ApiResponse>(this.API_URL + '/api/v1/apm/' + id);
+  }
 }

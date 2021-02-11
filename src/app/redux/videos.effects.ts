@@ -13,6 +13,9 @@ import {
   editVideo,
   editVideoSuccessfully,
   editVideoFail,
+  deleteVideo,
+  deleteVideoSuccessfully,
+  deleteVideoFail,
 } from './actions';
 
 @Injectable()
@@ -69,6 +72,26 @@ export class VideoEffects {
           catchError((err) =>
             of({
               type: editVideoFail.type,
+              payload: err.error.error || err.message,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  deleteVideo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteVideo.type),
+      mergeMap(({ id }) =>
+        this._videoService.deleteVideo(id).pipe(
+          map((res) => ({
+            type: deleteVideoSuccessfully.type,
+            payload: res.data,
+          })),
+          catchError((err) =>
+            of({
+              type: deleteVideoFail.type,
               payload: err.error.error || err.message,
             })
           )
