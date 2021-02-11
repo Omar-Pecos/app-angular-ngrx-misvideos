@@ -5,7 +5,7 @@ import { PlayComponent } from './components/play/play.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'play/:video_id', component: PlayComponent },
+  { path: 'player/:video_id', component: PlayComponent },
 
   { path: '**', redirectTo: '/' },
 ];
