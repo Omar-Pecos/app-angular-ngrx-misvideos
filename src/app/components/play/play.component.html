@@ -17,104 +17,16 @@
   </div>
   <div class="col-12 col-lg-4 p-3">
     <ul class="unstyled-list overflow-auto video-small-list">
-      <li class="d-flex flex-row align-items-center">
+      <li *ngFor="let video of videos$ | async" (click)="openVideo(video.url)">
         <img
           width="50"
           class="img-fluid"
           src="assets/images/play.png"
           alt="play"
         />
-        <span>Title 0</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="align-self-start"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="align-self-start"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="align-self-start"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
-      </li>
-      <li class="d-flex flex-row align-items-center">
-        <img
-          width="50"
-          class="img-fluid"
-          src="assets/images/play.png"
-          alt="play"
-        />
-        <span>Title 1</span>
+        <div class="text-center p-2" style="width: 100% !important">
+          {{ video.name }}
+        </div>
       </li>
     </ul>
   </div>

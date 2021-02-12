@@ -46,7 +46,7 @@ const _videoReducer = createReducer(
     error: '',
   })),
   on(createVideoSuccessfully, (state, { payload }) => ({
-    ...state,
+    //...state,
     status: 'success',
     videos: [payload, ...state.videos],
     error: '',
@@ -63,7 +63,7 @@ const _videoReducer = createReducer(
     error: '',
   })),
   on(editVideoSuccessfully, (state, { payload }) => ({
-    ...state,
+    //...state,
     status: 'success',
     videos: state.videos.map((video) => {
       if (video.id == payload.id) video = payload;
@@ -84,7 +84,7 @@ const _videoReducer = createReducer(
     error: '',
   })),
   on(deleteVideoSuccessfully, (state, { payload }) => ({
-    ...state,
+    //...state,
     status: 'success',
     videos: state.videos.filter((video) => video.id != payload.id),
     error: '',

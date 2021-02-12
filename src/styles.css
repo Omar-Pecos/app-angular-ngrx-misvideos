@@ -38,8 +38,9 @@
   display: none;
 }
 
-.video-small-list > li {
-  justify-content: space-evenly;
+.video-small-list li {
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
